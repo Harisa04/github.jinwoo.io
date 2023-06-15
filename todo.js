@@ -27,18 +27,42 @@ function 색추출기(colors) {
   return colors[랜덤값];
 }
 
+function saveTitleToLocalStorage(object) {
+  localStorage.setItem("object", JSON.stringify(object));
+}
+
+function loadTitleFromLocalStorage() {
+  return localStorage.getItem("객체") || "";
+}
+
 document.querySelector("button").addEventListener("click", (e) => {
   const newTag = document.createElement("p");
-  document.querySelector(".box1").appendChild(newTag);
-  newTag.innerHTML = document.querySelector("input").value;
-  document.querySelector("input").value = "";
+
+  document.querySelector(".iii").appendChild(newTag);
+
+  const 제목 = document.querySelector(".ii").value;
+  saveTitleToLocalStorage(제목);
+  const 할일 = document.querySelector(".oo").value;
+
+  const URL = document.querySelector(".pp").value;
+  const 현재시간 = new Date().toLocaleString();
+
+  const object = {
+    title : (제목),
+    content : (할일) ,
+  }
+
+  newTag.innerHTML = `<h3>${loadTitleFromLocalStorage()}</h3>${할일}<br> <a href="${URL}">${URL}</a><br/>${현재시간}`;
+
   newTag.style.backgroundColor = 색추출기(colors);
   newTag.setAttribute("draggable", "true");
   newTag.addEventListener("dragstart", (e) => {
     console.log(e.target);
     dragTarget = e.target;
   });
-  /**** 삭제버튼 생성 코드 - 시작 */
+
+  // ...
+
   const deleteBtn = document.createElement("span");
   deleteBtn.classList.add("delete");
   deleteBtn.innerHTML = "X";
@@ -47,16 +71,17 @@ document.querySelector("button").addEventListener("click", (e) => {
     e.currentTarget.parentElement.remove();
   });
   newTag.appendChild(deleteBtn);
-  /**** 삭제버튼 생성 코드 - 끝 */
+
+  // ...
 });
 
-const boxes = document.querySelectorAll(".box");
+const boxes = document.querySelectorAll(".iii");
 console.log(boxes);
-boxes.forEach((box, i) => {
-  box.addEventListener("dragover", (e) => {
+boxes.forEach((iii, i) => {
+  iii.addEventListener("dragover", (e) => {
     e.preventDefault();
   });
-  box.addEventListener("drop", (e) => {
+  iii.addEventListener("drop", (e) => {
     console.log(e.currentTarget);
     e.currentTarget.appendChild(dragTarget);
   });
