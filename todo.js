@@ -27,12 +27,13 @@ function 색추출기(colors) {
   return colors[랜덤값];
 }
 
-function saveTitleToLocalStorage(object) {
+function saveLocalStorage(object) {
   localStorage.setItem("object", JSON.stringify(object));
 }
 
-function loadTitleFromLocalStorage() {
-  return localStorage.getItem("객체") || "";
+function loadLocalStorage() {
+  const storedObject = localStorage.getItem("object");
+  return storedObject ? JSON.parse(storedObject) : { title: "", content: "" , URL: "", colors: "" , id: "" ,  };
 }
 
 document.querySelector("button").addEventListener("click", (e) => {
@@ -41,18 +42,21 @@ document.querySelector("button").addEventListener("click", (e) => {
   document.querySelector(".iii").appendChild(newTag);
 
   const 제목 = document.querySelector(".ii").value;
-  saveTitleToLocalStorage(제목);
   const 할일 = document.querySelector(".oo").value;
-
   const URL = document.querySelector(".pp").value;
+
   const 현재시간 = new Date().toLocaleString();
 
   const object = {
-    title : (제목),
-    content : (할일) ,
-  }
+    title: 제목,
+    content: 할일,
+    URL: URL,
+    color : 색추출기(colors),
+  };
 
-  newTag.innerHTML = `<h3>${loadTitleFromLocalStorage()}</h3>${할일}<br> <a href="${URL}">${URL}</a><br/>${현재시간}`;
+  saveLocalStorage(object);
+
+  newTag.innerHTML = `<h3>${제목}</h3>${할일}<br> <a href="${URL}">${URL}</a><br/>${현재시간}`;
 
   newTag.style.backgroundColor = 색추출기(colors);
   newTag.setAttribute("draggable", "true");
